@@ -23,8 +23,8 @@ const int closedPosRouter = 10;
 
 
 // For Tablesaw
-const int openPosTablesaw = 130;
-const int closedPosTablesaw = 0;
+const int openPosTablesaw = 90;
+const int closedPosTablesaw = 10;
 
 // For Jointer
 const int openPosJointer = 130;
@@ -154,6 +154,12 @@ void setServoState(char number)
         val = number;
         break;
     }
+
+ Serial.print("Val is: \n");
+  Serial.print(val);
+                    
+
+    
     if(!ignoreAll)
     {
         for(thisServ = 0; thisServ < servoCount; thisServ += 1)
@@ -203,12 +209,14 @@ void setServoState(char number)
                     newPos = openPosTablesaw;
                     Serial.print("Tablesaw open\n");
                     Serial.println();
+                     servoList[thisServ].write(newPos);
                 }
                 else
                 {
                     newPos = closedPosTablesaw;
                     Serial.print("Tablesaw closed\n");
                     Serial.println();
+                    servoList[thisServ].write(newPos);
                 }
                 break;
             }
@@ -265,10 +273,16 @@ void setServoState(char number)
             {
                 break;
             }
-                servoList[thisServ].write(newPos);
+                  
             }
+
+           servoList[thisServ].write(newPos); 
         }
+
+       
     }
+
+   
 }
 
 void keypadEvent_num(KeypadEvent key)
@@ -295,7 +309,7 @@ void swOnState(char key)
         }
         if(key == '#')
         {
-            Serial.print("CLOSE ALL");
+            Serial.print("CLOSE ALL NOW");
             Serial.println();
             setServoState(CLOSE_ALL);
         }
